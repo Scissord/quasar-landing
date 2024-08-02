@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex-Balance fix you're life</title>
+    <link rel="icon" href="img/cad.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body style="font-family: 'Montserrat', sans-serif;">
+    <style>
+      .relative::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7); /* Прозрачный черный цвет */
+        z-index: 1;
+      }
+      .relative {
+        position: relative;
+      }
+      .relative > * {
+        position: relative;
+        z-index: 10; /* Убедимся, что содержимое выше по z-индексу, чем псевдоэлемент */
+      }
+    </style>
+    <!-- FIRST BLOCK -->
+    <section 
+      class="min-h-screen flex items-center"
+    >
+      <div class="w-1/2 min-h-screen bg-black flex flex-col py-40 px-10 justify-around">
+        <img src="img/logo.svg" class="w-[40%]"/>
+        <p class="text-white text-[24px]">
+          Казахстанская IT-компания. Мы занимаемся
+          web-дизайном, разработкой сайтов и
+          внедрением CRM-систем в бизнес процессы
+        </p>
+        <div class="flex items-center gap-3">
+          <button class="p-3 h-8 bg-red-700 flex items-center justify-center text-white rounded-lg">Свяжитесь с нами</button>
+          <p class="text-white font-bold">+7 776 543 2105 / +7 771 383 9673</p>
+        </div>
+      </div>
+      <div 
+        style="background-image: url('img/quasar_bg.jpg');"
+        class="w-1/2 min-h-screen bg-cover bg-center relative flex flex-col items-center justify-around" 
+      >
+        <img src="img/znak.svg" class="w-[20%] mt-48"/>
+        <div class="text-white font-bold text-[24px] flex items-center gap-10 mb-20">
+          <p>WEB</p>
+          &#183;
+          <p>CRM</p>
+          &#183;
+          <p>DESIGN</p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
