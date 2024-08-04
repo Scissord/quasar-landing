@@ -9,6 +9,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+      (function(){
+         emailjs.init({
+           publicKey: "eS4aZP8nGWNi7zab8",
+         });
+      })();
+    </script>
+
   </head>
   <body style="font-family: 'Montserrat', sans-serif;">
     <style>
@@ -29,7 +40,64 @@
         position: relative;
         z-index: 10; /* Убедимся, что содержимое выше по z-индексу, чем псевдоэлемент */
       }
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 50;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 10px;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
+
+    <!-- Modal structure -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 class="text-xl mb-4">Свяжитесь с нами</h2>
+        <form id="contactForm">
+          <div class="mb-4">
+            <label for="user_name" class="block text-gray-700">Имя:</label>
+            <input type="text" id="user_name" name="name" class="w-full p-2 border border-gray-300 rounded">
+          </div>
+          <div class="mb-4">
+            <label for="user_info" class="block text-gray-700">Почта/Телефон:</label>
+            <input type="text" id="user_info" name="email" class="w-full p-2 border border-gray-300 rounded">
+          </div>
+          <div class="mb-4">
+            <label for="message" class="block text-gray-700">Сообщение:</label>
+            <textarea id="message" name="message" class="w-full p-2 border border-gray-300 rounded"></textarea>
+          </div>
+          <button type="button" onclick="sendMail()" class="bg-red-700 text-white px-4 py-2 rounded">Отправить</button>
+        </form>
+      </div>
+    </div>
+
     <!-- FIRST BLOCK -->
     <section 
       class="min-h-screen flex flex-col sm:flex-row items-center"
@@ -42,7 +110,7 @@
           внедрением CRM-систем в бизнес процессы
         </p>
         <div class="flex items-center gap-3">
-          <button class="text-[12px] sm:text-[16px] p-6 sm:p-3 h-8 bg-red-700 flex items-center justify-center text-white rounded-lg">Свяжитесь с нами</button>
+          <button id="contactButton" class="text-[12px] sm:text-[16px] p-6 sm:p-3 h-8 bg-red-700 flex items-center justify-center text-white rounded-lg">Свяжитесь с нами</button>
           <p class="text-white font-bold">+7 776 543 2105 / +7 771 383 9673</p>
         </div>
       </div>
@@ -60,5 +128,47 @@
         </div>
       </div>
     </section>
+    <script>
+      // Get the modal
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("contactButton");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal 
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+    </script>
+    <script>
+      function sendMail() {
+        var modal = document.getElementById("myModal");
+
+        const templateParams = {
+          user_name: document.querySelector("#user_name").value,
+          user_info: document.querySelector("#user_info").value,
+          message: document.querySelector("#message").value
+        };
+
+        const serviceId = "service_10l0q5l";
+        const templateId = "template_utxpq5p";
+        
+        console.log(templateParams)
+
+        emailjs.send(serviceId, templateId, templateParams)
+          .then(() => {
+            modal.style.display = "none";
+          })
+          .catch(err => console.error("Ошибка при отправке сообщения: ", err));
+        };
+    </script>
   </body>
 </html>
